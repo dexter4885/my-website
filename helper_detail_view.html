@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>헬퍼 상세 정보</title>
+    <style>
+        /* 기본 스타일 초기화 */
+        body {
+            margin: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        /* 상단 헤더 */
+        header {
+            background-color: #ffffff;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 20px;
+            margin-right: 15px;
+        }
+
+        header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 본문 영역 */
+        .main-content {
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* 공통 카드 스타일 */
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #eaeaea;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f8f9fa;
+            color: #111;
+        }
+
+        /* 상단 타이틀 및 기본 정보 영역 */
+        .helper-header-info h2 {
+            font-size: 24px;
+            margin: 0 0 10px 0;
+            color: #222;
+        }
+
+        .tags {
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background-color: #e6f2ff;
+            color: #007bff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-right: 5px;
+            display: inline-block;
+        }
+
+        /* 사진 갤러리 영역 (최대 3장) */
+        .photo-gallery {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .photo-item {
+            flex: 1;
+            height: 200px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #adb5bd;
+            font-size: 14px;
+            overflow: hidden;
+        }
+        
+        /* 이미지 태그가 들어갈 경우를 대비한 스타일 */
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 기본 규칙 안내 영역 */
+        .rule-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .rule-box ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #444;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        /* 요금 상세 표 (리스트 형태) */
+        .fee-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .fee-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: #fff;
+            border: 1px solid #f1f1f1;
+            border-radius: 6px;
+        }
+
+        .fee-label {
+            font-size: 15px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .fee-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #222;
+        }
+
+        .currency-badge {
+            background-color: #333;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        /* 메모 영역 */
+        .memo-content {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #444;
+            background-color: #fafafa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+
+        /* 하단 액션 버튼 영역 */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border: none;
+        }
+
+        .btn-secondary {
+            background-color: #e9ecef;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background-color: #dde2e6;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="javascript:history.back()" class="back-btn">←</a>
+        <h2>헬퍼 상세 정보</h2>
+    </header>
+
+    <main class="main-content">
+        
+        <div class="card helper-header-info">
+            <div class="tags">
+                <span class="tag">맛집 탐방</span>
+                <span class="tag">해운대구</span>
+            </div>
+            <h2>해운대구 로컬 찐맛집 투어 헬퍼</h2>
+            
+            <div class="photo-gallery">
+                <div class="photo-item"><img src="imgs/img1.png" alt=""></div>
+                <div class="photo-item"><img src="imgs/img1-2.png" alt=""></div>
+                <div class="photo-item"><img src="imgs/img1-3.png" alt=""></div>
+            </div>
+
+            <div class="rule-box">
+                <strong>💡 기본 동행 안내</strong>
+                <ul>
+                    <li>기본 동행시간: <strong>3시간</strong> 기준</li>
+                    <li>기본 인원: <strong>4인</strong> 기준</li>
+                    <li>차량 지원: <strong>기본 2시간</strong> 기준</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title">💰 상세 요금 안내 <span class="currency-badge">KRW</span></h3>
+            <div class="fee-list">
+                <div class="fee-item">
+                    <span class="fee-label">기본 동행시간 외 추가 (1시간당)</span>
+                    <span class="fee-value">15,000 원</span>
+                </div>
+                <div class="fee-item">
+                    <span class="fee-label">기본 인원 외 추가 (1명당)</span>
+                    <span class="fee-value">10,000 원</span>
+                </div>
+                <div class="fee-item">
+                    <span class="fee-label">차량 기본 시간 (2시간)</span>
+                    <span class="fee-value">30,000 원</span>
+                </div>
+                <div class="fee-item">
+                    <span class="fee-label">차량 기본 시간 외 추가 (1시간당)</span>
+                    <span class="fee-value">20,000 원</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title">📝 헬퍼의 메모</h3>
+            <div class="memo-content">
+                관광객은 모르는 진짜 숨은 로컬 맛집 위주로 안내해 드립니다.<br>
+                아이들과 함께 오시는 가족 단위 여행객이시라면, 유아용 식기나 놀이방이 있는 안전하고 편안한 식당 위주로 코스를 조정해 드릴 수 있습니다. <br><br>
+                특정 음식 알레르기가 있으시다면 예약 전 미리 꼭 말씀해 주세요!
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="helper_search_list.html" class="btn btn-secondary">목록으로 돌아가기</a>
+            
+            <button onclick="alert('도우미 신청 페이지로 이동합니다!');" class="btn btn-primary">도우미 신청</button>
+        </div>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>회원가입 - My Local Mate</title>
+    <style>
+        /* 기본 설정 및 메인 화면과 동일한 색상 변수 */
+        :root {
+            --primary-color: #FF6B6B;
+            --primary-dark: #ee5253;
+            --bg-color: #F8F9FA;
+            --text-color: #2D3436;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* 상단 헤더 (뒤로가기 포함) */
+        header {
+            background-color: #ffffff;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            position: relative;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 20px;
+            margin-right: 15px;
+        }
+
+        header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 메인 폼 영역 */
+        main {
+            flex: 1;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: #ffffff;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        /* 소셜 가입 버튼 스타일 */
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: opacity 0.2s ease;
+        }
+
+        .social-btn:active {
+            opacity: 0.8;
+        }
+
+        .btn-kakao {
+            background-color: #FEE500;
+            color: #3C1E1E;
+        }
+
+        .btn-naver {
+            background-color: #03C75A;
+            color: #ffffff;
+        }
+
+        .btn-google {
+            background-color: #ffffff;
+            color: #333333;
+            border: 1px solid #e0e0e0;
+        }
+
+        /* 구분선 (또는 이메일로 가입) */
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #b2bec3;
+            font-size: 13px;
+            margin: 15px 0;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #dfe6e9;
+        }
+
+        .divider::before { margin-right: .5em; }
+        .divider::after { margin-left: .5em; }
+
+        /* 이메일 가입 폼 */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .input-group input {
+            padding: 15px;
+            border: 1px solid #dfe6e9;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-color);
+        }
+
+        /* 회원가입 완료 버튼 */
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .submit-btn:active {
+            background-color: var(--primary-dark);
+        }
+
+        /* 하단 로그인 링크 */
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #636e72;
+        }
+
+        .login-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-btn">←</a>
+        <h2>회원가입</h2>
+    </header>
+
+    <main>
+        <div class="page-title">환영합니다! 👋<br>Local Mate가 되어주세요.</div>
+
+        <a href="#" class="social-btn btn-kakao">카카오로 시작하기</a>
+        <a href="#" class="social-btn btn-naver">네이버로 시작하기</a>
+        <a href="#" class="social-btn btn-google">구글로 시작하기</a>
+
+        <div class="divider">또는 이메일로 가입하기</div>
+
+        <div class="input-group">
+            <input type="email" placeholder="이메일 주소" required>
+            <input type="password" placeholder="비밀번호 (8자 이상)" required>
+            <input type="password" placeholder="비밀번호 확인" required>
+            <input type="text" placeholder="닉네임 (여행자들에게 보일 이름)" required>
+        </div>
+
+        <button type="button" class="submit-btn" onclick="alert('가입이 완료되었습니다! (데모)'); location.href='login.html'">가입하기</button>
+
+        <div class="login-link">
+            이미 계정이 있으신가요? <a href="login.html">로그인</a>
+        </div>
+    </main>
+
+</body>
+</html>

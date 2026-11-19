@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>관리자 센터 - My Local Mate</title>
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --dark-bg: #2D3436;
+            --bg-color: #F4F7F6;
+            --white: #ffffff;
+            --border-color: #eee;
+            --success: #2ecc71;
+            --warning: #f1c40f;
+            --danger: #e74c3c;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--dark-bg);
+        }
+
+        /* 관리자 헤더 */
+        header {
+            background-color: var(--dark-bg);
+            color: var(--white);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 { margin: 0; font-size: 18px; letter-spacing: -0.5px; }
+        .home-link { color: #b2bec3; text-decoration: none; font-size: 13px; }
+
+        /* 대시보드 요약 정보 */
+        .admin-summary {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .summary-card {
+            background: var(--white);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .summary-card label { font-size: 11px; color: #636e72; display: block; margin-bottom: 5px; }
+        .summary-card strong { font-size: 18px; color: var(--primary-color); }
+
+        /* 관리 탭 메뉴 */
+        .admin-tabs {
+            display: flex;
+            background: var(--white);
+            padding: 0 10px;
+            overflow-x: auto;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .tab-item {
+            padding: 15px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #b2bec3;
+            white-space: nowrap;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-item.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        /* 콘텐츠 영역 */
+        .tab-content { padding: 20px; display: none; }
+        .tab-content.active { display: block; }
+
+        /* 데이터 테이블 스타일 */
+        .data-table {
+            width: 100%;
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .data-table th { background: #f8f9fa; padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border-color); color: #636e72; }
+        .data-table td { padding: 15px 10px; border-bottom: 1px solid #fcfcfc; }
+
+        /* 상태 배지 */
+        .badge {
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .badge-user { background: #e1f5fe; color: #03a9f4; }
+        .badge-helper { background: #fff3e0; color: #fb8c00; }
+        .badge-done { background: #e8f5e9; color: var(--success); }
+        .badge-wait { background: #fffde7; color: #f9a825; }
+        .badge-err { background: #ffebee; color: var(--danger); }
+
+        /* 하단 액션 버튼 */
+        .btn-sm {
+            padding: 5px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            background: var(--white);
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .status-active {
+            background-color: #ffffff;
+            color: #2d3436;
+            border: 1px solid var(--border-color);
+        }
+
+        .status-banned {
+            background-color: var(--danger) !important;
+            color: white !important;
+            border: none !important;
+        }
+        
+        /* 상세 이동 버튼 스타일 */
+        .btn-detail {
+            background-color: var(--white);
+            color: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            font-weight: 700;
+            padding: 8px 12px !important;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-detail:hover {
+            background-color: #f8f9fa;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* 배지 보완 */
+        .badge-wait { background: #fff0f0; color: #FF6B6B; } /* 승인 대기 */
+        .badge-done { background: #e8f5e9; color: #2ecc71; } /* 진행 중 */
+        
+        /* 이동 버튼 스타일 통일 */
+        .btn-detail {
+            background-color: var(--white);
+            color: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            font-weight: 700;
+            padding: 8px 12px !important;
+            border-radius: 6px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .btn-detail:hover {
+            background-color: #f8f9fa;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2>My Local Mate <span style="font-weight: 300; font-size: 14px;">Admin</span></h2>
+        <a href="index.html" class="home-link">로그아웃</a>
+    </header>
+
+    <div class="admin-summary">
+        <div class="summary-card">
+            <label>신규 가입 유저</label>
+            <strong>128명</strong>
+        </div>
+        <div class="summary-card">
+            <label>미해결 분쟁</label>
+            <strong style="color: var(--danger);">3건</strong>
+        </div>
+    </div>
+
+    <nav class="admin-tabs">
+        <div class="tab-item active" onclick="openTab(event, 'user-mgmt')">유저관리</div>
+        <div class="tab-item" onclick="openTab(event, 'match-mgmt')">매칭상태</div>
+        <div class="tab-item" onclick="event.preventDefault(); openTab(event, 'pay-mgmt')">결제/정산</div>
+        <div class="tab-item" onclick="openTab(event, 'report-mgmt')">신고/분쟁</div>
+    </nav>
+
+    <div id="user-mgmt" class="tab-content active">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>유저 정보</th>
+                    <th>구분/가입일</th>
+                    <th>매칭</th>
+                    <th>상태/관리</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>지민</strong><br>
+                        <span style="color:#b2bec3; font-size:11px;">jimin@mail.com</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-user">여행자</span><br>
+                        <span style="color:#636e72; font-size:11px;">2024.03.15</span>
+                    </td>
+                    <td><strong style="color: #2D3436;">12</strong>회</td>
+                    <td>
+                        <button class="btn-sm status-active" onclick="toggleAccount(this, '지민')">정상</button>
+                        <button class="btn-sm" style="margin-top:4px;">상세</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>강호동</strong><br>
+                        <span style="color:#b2bec3; font-size:11px;">local_busan</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-helper">헬퍼</span><br>
+                        <span style="color:#636e72; font-size:11px;">2024.01.20</span>
+                    </td>
+                    <td><strong style="color: #2D3436;">45</strong>회</td>
+                    <td>
+                        <button class="btn-sm status-active" onclick="toggleAccount(this, '강호동')">정상</button>
+                        <button class="btn-sm" style="margin-top:4px;">상세</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>James</strong><br>
+                        <span style="color:#b2bec3; font-size:11px;">uk_james99</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-user">여행자</span><br>
+                        <span style="color:#636e72; font-size:11px;">2024.04.01</span>
+                    </td>
+                    <td><strong style="color: #2D3436;">2</strong>회</td>
+                    <td>
+                        <button class="btn-sm status-banned" onclick="toggleAccount(this, 'James')">정지됨</button>
+                        <button class="btn-sm" style="margin-top:4px;">상세</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="match-mgmt" class="tab-content">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>요청건/매칭대상</th>
+                    <th>매칭 일시</th>
+                    <th>상태</th>
+                    <th>상세보기</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>해운대 맛집 투어</strong><br>
+                        <span style="font-size:11px; color:#FF6B6B;">👤지민 ↔ 👷강호동</span>
+                    </td>
+                    <td>
+                        <span style="font-size:12px; color:#636e72;">2026.04.16<br>14:25:30</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-wait" id="status-1">승인대기</span>
+                    </td>
+                    <td>
+                        <button class="btn-sm btn-detail" onclick="location.href='match_detail_view.html?id=1'">이동 〉</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <strong>제주 카페 투어</strong><br>
+                        <span style="font-size:11px; color:#FF6B6B;">👤왕웨이 ↔ 👷이수근</span>
+                    </td>
+                    <td>
+                        <span style="font-size:12px; color:#636e72;">2026.04.15<br>09:12:10</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-done">진행중</span>
+                    </td>
+                    <td>
+                        <button class="btn-sm btn-detail" onclick="location.href='match_detail_view.html?id=2'">이동 〉</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <strong>강남 K-POP 투어</strong><br>
+                        <span style="font-size:11px; color:#FF6B6B;">👤사쿠라 ↔ 👷김희철</span>
+                    </td>
+                    <td>
+                        <span style="font-size:12px; color:#636e72;">2026.04.14<br>18:40:05</span>
+                    </td>
+                    <td>
+                        <span class="badge" style="background:#eee; color:#666;">종료</span>
+                    </td>
+                    <td>
+                        <button class="btn-sm btn-detail" onclick="location.href='match_detail_view.html?id=3'">이동 〉</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="pay-mgmt" class="tab-content">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>결제액/대상</th>
+                    <th>정산대상</th>
+                    <th>상태</th>
+                    <th>상세보기</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>60,000원</strong><br>
+                        <span style="font-size:11px; color:#b2bec3;">👤지민</span>
+                    </td>
+                    <td>
+                        <strong>강호동</strong><br>
+                        <span style="font-size:11px; color:#636e72;">신한 110-***</span>
+                    </td>
+                    <td><span class="badge badge-done">정산완료</span></td>
+                    <td>
+                        <button class="btn-sm btn-detail" onclick="location.href='admin_payment_detail.html?id=101'">이동 〉</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>120,000원</strong><br>
+                        <span style="font-size:11px; color:#b2bec3;">👤왕웨이</span>
+                    </td>
+                    <td>
+                        <strong>김영철</strong><br>
+                        <span style="font-size:11px; color:#636e72;">국민 407-***</span>
+                    </td>
+                    <td><span class="badge badge-wait">입금대기</span></td>
+                    <td>
+                        <button class="btn-sm btn-detail" onclick="location.href='admin_payment_detail.html?id=102'">이동 〉</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="report-mgmt" class="tab-content">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>신고유형</th>
+                    <th>당사자</th>
+                    <th>상태</th>
+                    <th>상세보기</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong style="color:var(--danger);">노쇼(No-show)</strong><br>
+                        <span style="font-size:11px; color:#b2bec3;">2026.04.16</span>
+                    </td>
+                    <td>
+                        <span style="font-size:12px;">James<br>↔ 박철수</span>
+                    </td>
+                    <td><span class="badge badge-err">조사중</span></td>
+                    <td>
+                        <button class="btn-sm btn-detail" onclick="location.href='admin_report_detail.html?id=201'">이동 〉</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>불친절/욕설</strong><br>
+                        <span style="font-size:11px; color:#b2bec3;">2026.04.14</span>
+                    </td>
+                    <td>
+                        <span style="font-size:12px;">사쿠라<br>↔ 이수근</span>
+                    </td>
+                    <td><span class="badge badge-done">해결됨</span></td>
+                    <td>
+                        <button class="btn-sm btn-detail" onclick="location.href='admin_report_detail.html?id=202'">이동 〉</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabContent, tabLinks;
+            tabContent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = "none";
+                tabContent[i].classList.remove("active");
+            }
+            tabLinks = document.getElementsByClassName("tab-item");
+            for (i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+        // 계정 정지/해제 토글 함수
+    function toggleAccount(btn, userName) {
+        if (btn.classList.contains('status-active')) {
+            if (confirm(userName + ' 유저의 계정을 즉시 정지하시겠습니까?')) {
+                btn.classList.remove('status-active');
+                btn.classList.add('status-banned');
+                btn.innerText = '정지됨';
+                alert(userName + '의 계정이 정지되었습니다.');
+            }
+        } else {
+            if (confirm(userName + ' 유저의 정지를 해제하시겠습니까?')) {
+                btn.classList.remove('status-banned');
+                btn.classList.add('status-active');
+                btn.innerText = '정상';
+                alert(userName + '의 계정이 활성화되었습니다.');
+            }
+        }
+    }
+    </script>
+</body>
+</html>

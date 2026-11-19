@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>결제/정산 상세 - 관리자</title>
+    <style>
+        :root { --primary: #FF6B6B; --bg: #F4F7F6; --dark: #2D3436; }
+        body { font-family: 'Pretendard', sans-serif; background: var(--bg); margin: 0; padding: 0; }
+        header { background: var(--dark); color: white; padding: 20px; display: flex; align-items: center; }
+        .back-btn { color: white; text-decoration: none; margin-right: 15px; font-size: 20px; }
+        
+        section { background: white; margin: 15px; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f1f1; }
+        .info-row label { color: #636e72; font-size: 14px; }
+        .info-row span { font-weight: 700; color: var(--dark); }
+
+        .price-card { background: #fff0f0; padding: 20px; border-radius: 12px; margin-top: 10px; }
+        .price-total { font-size: 22px; color: var(--primary); text-align: right; font-weight: 800; }
+        
+        .action-area { padding: 20px; display: flex; gap: 10px; position: fixed; bottom: 0; width: 100%; box-sizing: border-box; background: white; border-top: 1px solid #eee; }
+        .btn { flex: 1; padding: 15px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; }
+        .btn-confirm { background: var(--primary); color: white; }
+        .btn-cancel { background: #eee; color: #666; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="admin_dashboard.html" class="back-btn">←</a>
+        <span>정산 상세 내역</span>
+    </header>
+
+    <section>
+        <div class="info-row"><label>매칭 번호</label><span>#MATCH-20260416</span></div>
+        <div class="info-row"><label>여행자(입금자)</label><span>지민</span></div>
+        <div class="info-row"><label>헬퍼(정산대상)</label><span>강호동 (신한 110-***-****)</span></div>
+        <div class="info-row"><label>서비스 일시</label><span>2026.04.16</span></div>
+    </section>
+
+    <section>
+        <label style="font-size: 13px; color: #b2bec3;">금액 상세</label>
+        <div class="info-row"><label>총 결제 금액</label><span>60,000 원</span></div>
+        <div class="info-row"><label>플랫폼 수수료 (10%)</label><span style="color: #e74c3c;">- 6,000 원</span></div>
+        <div class="price-card">
+            <label style="font-size: 12px;">헬퍼 최종 정산 금액</label>
+            <div class="price-total">54,000 원</div>
+        </div>
+    </section>
+
+    <div class="action-area">
+        <button class="btn btn-cancel" onclick="alert('입금 확인 요청을 보냈습니다.')">입금독촉</button>
+        <button class="btn btn-confirm" onclick="confirm('헬퍼에게 정산 금액을 송금하셨습니까? 확인 시 정산 완료 처리됩니다.')">정산 확정/송금</button>
+    </div>
+</body>
+</html>

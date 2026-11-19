@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>요청 상세 보기 - My Local Mate</title>
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --primary-dark: #ee5253;
+            --bg-color: #F8F9FA;
+            --text-color: #2D3436;
+            --white: #ffffff;
+            --border-color: #eee;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 100px; /* 하단 고정 버튼 공간 */
+        }
+
+        /* 상단 헤더 */
+        header {
+            background-color: var(--white);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn { text-decoration: none; color: var(--text-color); font-size: 20px; margin-right: 15px; }
+        header h2 { margin: 0; font-size: 18px; font-weight: 700; flex: 1; text-align: center; margin-right: 35px; }
+
+        /* 섹션 공통 스타일 */
+        section {
+            background-color: var(--white);
+            margin-bottom: 10px;
+            padding: 25px 20px;
+        }
+
+        /* 작성자 정보 */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .avatar { width: 45px; height: 45px; background: #dfe6e9; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .user-meta .name { font-size: 16px; font-weight: 700; display: block; }
+        .user-meta .time { font-size: 12px; color: #b2bec3; }
+
+        /* 본문 타이틀 */
+        .request-title {
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1.4;
+            margin: 0 0 20px 0;
+            color: var(--text-color);
+        }
+
+        /* 상세 정보 그리드 */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            background: #fdfdfd;
+            border: 1px solid #f1f1f1;
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        .info-item { display: flex; flex-direction: column; gap: 4px; }
+        .info-item label { font-size: 12px; color: #b2bec3; font-weight: 600; }
+        .info-item span { font-size: 15px; font-weight: 700; color: #2d3436; }
+
+        /* 차량/시간 특이사항 배지 */
+        .option-badges {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .badge {
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .badge.car { background: #fff0f0; color: var(--primary-color); border: 1px solid #ffdbdb; }
+        .badge.time { background: #f1f3f5; color: #495057; }
+
+        /* 상세 내용(특기사항) */
+        .content-area {
+            line-height: 1.8;
+            font-size: 15px;
+            color: #4b5563;
+            white-space: pre-wrap; /* 줄바꿈 유지 */
+        }
+
+        .section-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #b2bec3;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        /* 하단 고정 액션 바 */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: var(--white);
+            padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.02);
+        }
+
+        .btn {
+            height: 54px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            flex: 1;
+        }
+
+        .btn-outline { border: 1.5px solid #dfe6e9; color: #636e72; flex: 0.4; }
+        .btn-primary { background: var(--primary-color); color: var(--white); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3); }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="javascript:history.back()" class="back-btn">←</a>
+        <h2>요청 상세 정보</h2>
+    </header>
+
+    <section>
+        <div class="user-profile">
+            <div class="avatar">👤</div>
+            <div class="user-meta">
+                <span class="name">지민</span>
+                <span class="time">방금 전 작성 · 한국</span>
+            </div>
+        </div>
+        <h1 class="request-title">부산 해운대 현지인 맛집 투어 희망합니다!</h1>
+        
+        <div class="info-grid">
+            <div class="info-item">
+                <label>국가/도시</label>
+                <span>한국, 부산</span>
+            </div>
+            <div class="info-item">
+                <label>여행 인원</label>
+                <span>3명</span>
+            </div>
+            <div class="info-item">
+                <label>시작일</label>
+                <span>2024.04.20</span>
+            </div>
+            <div class="info-item">
+                <label>종료일</label>
+                <span>2024.04.22</span>
+            </div>
+        </div>
+
+        <div class="option-badges">
+            <div class="badge badge.car">🚗 차량 지원 (기본 2h + 추가 1h)</div>
+            <div class="badge badge.time">⏱ 동행 (기본 3h + 추가 2h)</div>
+        </div>
+    </section>
+
+    <section>
+        <span class="section-label">특기사항 및 요청내용</span>
+        <div class="content-area">
+안녕하세요! 이번에 친구들과 부산 여행을 가게 되었습니다.
+
+해운대 근처에서 관광객들만 가는 식당 말고, 진짜 부산 사람들이 줄 서서 먹는 로컬 맛집(국밥, 밀면 등) 위주로 안내받고 싶어요.
+
+중간에 예쁜 카페도 한곳 들르고 싶고, 이동 시 저희가 짐이 좀 많아서 차량으로 이동 도와주실 수 있는 헬퍼님이면 좋겠습니다.
+
+아이들도 한 명 포함되어 있어서 친절하신 분이었으면 해요! 감사합니다.
+        </div>
+    </section>
+
+    <div class="bottom-bar">
+        <a href="#" class="btn btn-outline" onclick="alert('관심 등록되었습니다!')">♡</a>
+        <a href="#" class="btn btn-primary" onclick="confirm('이 요청에 헬퍼로 지원하시겠습니까?')">헬퍼 지원하기</a>
+    </div>
+
+</body>
+</html>

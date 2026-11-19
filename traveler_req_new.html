@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>새 일정 등록 - My Local Mate</title>
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --primary-dark: #ee5253;
+            --bg-color: #F8F9FA;
+            --text-color: #2D3436;
+            --border-color: #dfe6e9;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #ffffff;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn { text-decoration: none; color: var(--text-color); font-size: 20px; margin-right: 15px; }
+        header h2 { margin: 0; font-size: 18px; font-weight: 700; position: absolute; left: 50%; transform: translateX(-50%); }
+
+        main { flex: 1; padding: 20px; padding-bottom: 100px; }
+        .form-info { margin-bottom: 25px; }
+        .form-info h3 { margin: 0 0 5px 0; font-size: 22px; color: var(--primary-color); }
+        .form-info p { margin: 0; font-size: 14px; color: #636e72; }
+
+        .input-group { margin-bottom: 20px; display: flex; flex-direction: column; }
+        .input-group label { font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--text-color); }
+
+        input[type="text"], input[type="date"], input[type="number"], select, textarea {
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+            background-color: #ffffff;
+        }
+
+        input:focus, select:focus, textarea:focus { border-color: var(--primary-color); }
+
+        .row-group { display: flex; gap: 10px; }
+        .row-group .input-group { flex: 1; }
+
+        /* 차량 지원 체크박스 커스텀 스타일 */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+        }
+
+        .checkbox-container input {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            accent-color: var(--primary-color);
+        }
+
+        .checkbox-container span { font-size: 15px; font-weight: 600; }
+
+        /* 체크박스 선택 시 나타나는 상세 입력 영역 */
+        #car-detail-area {
+            display: none; /* 기본 숨김 */
+            background-color: #fff0f0;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #ffdbdb;
+            margin-bottom: 20px;
+        }
+
+        .unit-input { position: relative; display: flex; align-items: center; }
+        .unit-input input { width: 100%; padding-right: 50px; }
+        .unit-input .unit { position: absolute; right: 15px; font-size: 14px; color: #adb5bd; }
+
+        .submit-area {
+            padding: 20px;
+            background-color: #ffffff;
+            border-top: 1px solid #eee;
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            z-index: 100;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        textarea { height: 100px; resize: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="traveler.html" class="back-btn">←</a>
+        <h2>새 일정 등록</h2>
+    </header>
+
+    <main>
+        <div class="form-info">
+            <h3>여행 정보 입력</h3>
+            <p>현지 헬퍼에게 요청할 내용을 상세히 적어주세요.</p>
+        </div>
+
+        <form onsubmit="event.preventDefault(); alert('요청이 성공적으로 저장되었습니다!'); location.href='traveler.html';">
+            
+            <div class="input-group">
+                <label>여행 제목</label>
+                <input type="text" placeholder="예: 해운대 현지인 맛집 투어 희망" required>
+            </div>
+
+            <div class="row-group">
+                <div class="input-group">
+                    <label>국가</label>
+                    <select required>
+                        <option value="" disabled selected>선택</option>
+                        <option value="KR">한국</option>
+                        <option value="JP">일본</option>
+                        <option value="CN">중국</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>도시</label>
+                    <input type="text" placeholder="예: 부산" required>
+                </div>
+            </div>
+
+            <div class="row-group">
+                <div class="input-group">
+                    <label>시작일</label>
+                    <input type="date" required>
+                </div>
+                <div class="input-group">
+                    <label>종료일</label>
+                    <input type="date" required>
+                </div>
+            </div>
+
+            <div class="row-group">
+                <div class="input-group">
+                    <label>여행 인원</label>
+                    <div class="unit-input">
+                        <input type="number" placeholder="4" min="1" required>
+                        <span class="unit">명</span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>기본 동행</label>
+                    <div class="unit-input">
+                        <input type="text" value="3" readonly style="background-color: #f1f3f5; color: #adb5bd;">
+                        <span class="unit">시간</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>동행 시간 추가</label>
+                <div class="unit-input">
+                    <input type="number" placeholder="기본 3시간 외 추가 시간" min="0">
+                    <span class="unit">시간</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>차량 지원 옵션</label>
+                <label class="checkbox-container">
+                    <input type="checkbox" id="car-toggle" onchange="toggleCarDetail()">
+                    <span>차량 지원이 필요합니다 (기본 2시간)</span>
+                </label>
+
+                <div id="car-detail-area">
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label style="color: var(--primary-dark);">차량 추가 이용 시간</label>
+                        <div class="unit-input">
+                            <input type="number" id="car-extra-time" placeholder="기본 2시간 초과 시 입력" min="0">
+                            <span class="unit">시간</span>
+                        </div>
+                        <p style="font-size: 11px; color: #ee5253; margin-top: 8px;">* 차량 지원 선택 시 기본 2시간이 포함됩니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>특기사항</label>
+                <textarea placeholder="선호하는 음식, 언어 능력, 헬퍼에게 바라는 점 등을 자유롭게 작성해주세요."></textarea>
+            </div>
+
+            <div class="submit-area">
+                <button type="submit" class="submit-btn">요청 저장하기</button>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        function toggleCarDetail() {
+            const isChecked = document.getElementById('car-toggle').checked;
+            const detailArea = document.getElementById('car-detail-area');
+            const extraTimeInput = document.getElementById('car-extra-time');
+
+            if (isChecked) {
+                detailArea.style.display = 'block';
+            } else {
+                detailArea.style.display = 'none';
+                extraTimeInput.value = ''; // 체크 해제 시 값 초기화
+            }
+        }
+    </script>
+</body>
+</html>

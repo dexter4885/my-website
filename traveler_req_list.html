@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>여행 요청 목록 - My Local Mate</title>
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --primary-dark: #ee5253;
+            --bg-color: #F8F9FA;
+            --text-color: #2D3436;
+            --white: #ffffff;
+            --border-color: #eee;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 20px;
+        }
+
+        /* 상단 헤더 */
+        header {
+            background-color: var(--white);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn { text-decoration: none; color: var(--text-color); font-size: 20px; margin-right: 15px; }
+        header h2 { margin: 0; font-size: 18px; font-weight: 700; flex: 1; text-align: center; margin-right: 35px; }
+
+        /* 필터/요약 영역 */
+        .list-summary {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-summary span { font-size: 14px; color: #636e72; }
+        .list-summary strong { color: var(--primary-color); }
+
+        /* 리스트 컨테이너 */
+        .request-container {
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* 여행 요청 카드 스타일 */
+        .request-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border: 1px solid #f1f1f1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform 0.1s;
+        }
+
+        .request-card:active { transform: scale(0.98); background-color: #fafafa; }
+
+        /* 카드 상단: 유저 및 상태 */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info { display: flex; align-items: center; gap: 8px; }
+        .user-avatar { width: 24px; height: 24px; background: #dfe6e9; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+        .user-name { font-size: 13px; font-weight: 600; color: #636e72; }
+        .status-badge { font-size: 11px; padding: 4px 8px; border-radius: 4px; background: #e6f2ff; color: #007bff; font-weight: 700; }
+        .status-badge.waiting { background: #fff0f0; color: var(--primary-color); }
+
+        /* 카드 본문: 제목 및 일정 */
+        .card-body h3 { margin: 0; font-size: 17px; font-weight: 800; line-height: 1.4; color: var(--text-color); }
+        .card-details { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+        .detail-item { font-size: 12px; background: #f1f3f5; padding: 4px 10px; border-radius: 20px; color: #495057; display: flex; align-items: center; gap: 4px; }
+
+        /* 카드 하단: 작성 시간 */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f8f9fa;
+            padding-top: 12px;
+            margin-top: 4px;
+        }
+        .date-text { font-size: 12px; color: #b2bec3; }
+        .view-more { font-size: 12px; color: var(--primary-color); font-weight: 700; }
+
+        /* 플로팅 버튼 (글쓰기) */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            text-decoration: none;
+            color: white;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="javascript:history.back()" class="back-btn">←</a>
+        <h2>여행 요청 현황</h2>
+    </header>
+
+    <div class="list-summary">
+        <span>총 <strong>4개</strong>의 요청이 있습니다.</span>
+        <span style="font-size: 12px;">최신순 ↓</span>
+    </div>
+
+    <main class="request-container">
+        
+        <a href="traveler_req_detail.html" class="request-card">
+            <div class="card-header">
+                <div class="user-info">
+                    <div class="user-avatar">👤</div>
+                    <span class="user-name">지민</span>
+                </div>
+                <div class="status-badge waiting">매칭 대기중</div>
+            </div>
+            <div class="card-body">
+                <h3>부산 해운대 현지인 맛집 투어 희망합니다!</h3>
+                <div class="card-details">
+                    <span class="detail-item">📍 한국, 부산</span>
+                    <span class="detail-item">📅 04.20 - 04.22</span>
+                    <span class="detail-item">👥 3명</span>
+                    <span class="detail-item">🚗 차량 필요</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <span class="date-text">방금 전 작성</span>
+                <span class="view-more">상세보기 〉</span>
+            </div>
+        </a>
+
+        <a href="#" class="request-card">
+            <div class="card-header">
+                <div class="user-info">
+                    <div class="user-avatar">👤</div>
+                    <span class="user-name">James</span>
+                </div>
+                <div class="status-badge">매칭 완료</div>
+            </div>
+            <div class="card-body">
+                <h3>Seoul City Night Tour & Photo</h3>
+                <div class="card-details">
+                    <span class="detail-item">📍 Korea, Seoul</span>
+                    <span class="detail-item">📅 05.01 - 05.02</span>
+                    <span class="detail-item">👥 2명</span>
+                    <span class="detail-item">🚶 도보/대중교통</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <span class="date-text">2시간 전 작성</span>
+                <span class="view-more">상세보기 〉</span>
+            </div>
+        </a>
+
+        <a href="#" class="request-card">
+            <div class="card-header">
+                <div class="user-info">
+                    <div class="user-avatar">👤</div>
+                    <span class="user-name">사쿠라</span>
+                </div>
+                <div class="status-badge waiting">매칭 대기중</div>
+            </div>
+            <div class="card-body">
+                <h3>강남 K-POP 성지순례 동행 구해요!</h3>
+                <div class="card-details">
+                    <span class="detail-item">📍 한국, 서울</span>
+                    <span class="detail-item">📅 04.25 - 04.25</span>
+                    <span class="detail-item">👥 1명</span>
+                    <span class="detail-item">🚶 도보</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <span class="date-text">어제 작성</span>
+                <span class="view-more">상세보기 〉</span>
+            </div>
+        </a>
+
+        <a href="#" class="request-card">
+            <div class="card-header">
+                <div class="user-info">
+                    <div class="user-avatar">👤</div>
+                    <span class="user-name">왕웨이</span>
+                </div>
+                <div class="status-badge waiting">매칭 대기중</div>
+            </div>
+            <div class="card-body">
+                <h3>제주도 서귀포 카페 투어 차량 동행 요청</h3>
+                <div class="card-details">
+                    <span class="detail-item">📍 한국, 제주</span>
+                    <span class="detail-item">📅 05.10 - 05.12</span>
+                    <span class="detail-item">👥 4명</span>
+                    <span class="detail-item">🚗 차량 필수</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <span class="date-text">2일 전 작성</span>
+                <span class="view-more">상세보기 〉</span>
+            </div>
+        </a>
+
+    </main>
+
+    <a href="traveler_req_new.html" class="fab">+</a>
+
+</body>
+</html>

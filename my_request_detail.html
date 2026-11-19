@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>내 요청 상세 현황 - My Local Mate</title>
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --primary-dark: #ee5253;
+            --bg-color: #F8F9FA;
+            --text-color: #2D3436;
+            --white: #ffffff;
+            --border-color: #eee;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 100px;
+        }
+
+        header {
+            background-color: var(--white);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .back-btn { text-decoration: none; color: var(--text-color); font-size: 20px; margin-right: 15px; }
+        header h2 { margin: 0; font-size: 18px; font-weight: 700; flex: 1; text-align: center; margin-right: 35px; }
+
+        section {
+            background-color: var(--white);
+            margin-bottom: 10px;
+            padding: 25px 20px;
+        }
+
+        /* [추가] 실시간 매칭 상태바 */
+        .status-banner {
+            background-color: #fff0f0;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ffdbdb;
+        }
+        .status-text { font-size: 15px; font-weight: 800; color: var(--primary-color); }
+        .status-desc { font-size: 12px; color: #636e72; }
+
+        .request-title {
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1.4;
+            margin: 0 0 20px 0;
+            color: var(--text-color);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            background: #fdfdfd;
+            border: 1px solid #f1f1f1;
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        .info-item { display: flex; flex-direction: column; gap: 4px; }
+        .info-item label { font-size: 11px; color: #b2bec3; font-weight: 600; text-transform: uppercase; }
+        .info-item span { font-size: 15px; font-weight: 700; color: #2d3436; }
+
+        .option-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .badge {
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .badge.car { background: #fff0f0; color: var(--primary-color); border: 1px solid #ffdbdb; }
+        .badge.time { background: #f1f3f5; color: #495057; }
+
+        .section-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #b2bec3;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .content-area {
+            line-height: 1.8;
+            font-size: 15px;
+            color: #4b5563;
+            white-space: pre-wrap;
+        }
+
+        /* [수정] 하단 고정 액션 바 (여행자 전용) */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: var(--white);
+            padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+        }
+
+        .btn {
+            height: 54px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            flex: 1;
+        }
+
+        .btn-cancel { border: 1.5px solid #dfe6e9; color: #ff7675; flex: 0.4; }
+        .btn-edit { background: var(--primary-color); color: var(--white); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3); }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="traveler.html" class="back-btn">←</a>
+        <h2>내 요청 상세 현황</h2>
+    </header>
+
+    <div class="status-banner">
+        <div class="status-text">🔍 매칭 대기 중</div>
+        <div class="status-desc">관리자가 내용을 검토하고 있습니다.</div>
+    </div>
+
+    <section>
+        <h1 class="request-title">부산 해운대 현지인 맛집 투어 희망합니다!</h1>
+        
+        <div class="info-grid">
+            <div class="info-item">
+                <label>국가/도시</label>
+                <span>한국, 부산</span>
+            </div>
+            <div class="info-item">
+                <label>여행 인원</label>
+                <span>3명</span>
+            </div>
+            <div class="info-item">
+                <label>시작일</label>
+                <span>2024.05.10</span>
+            </div>
+            <div class="info-item">
+                <label>종료일</label>
+                <span>2024.05.12</span>
+            </div>
+        </div>
+
+        <div class="option-badges">
+            <div class="badge car">🚗 차량 지원 (기본 2h + 추가 1h)</div>
+            <div class="badge time">⏱ 동행 (기본 3h + 추가 2h)</div>
+        </div>
+    </section>
+
+    <section>
+        <span class="section-label">내가 작성한 요청내용</span>
+        <div class="content-area">
+안녕하세요! 이번에 친구들과 부산 여행을 가게 되었습니다.
+
+해운대 근처에서 관광객들만 가는 식당 말고, 진짜 부산 사람들이 줄 서서 먹는 로컬 맛집(국밥, 밀면 등) 위주로 안내받고 싶어요.
+
+중간에 예쁜 카페도 한곳 들르고 싶고, 이동 시 저희가 짐이 좀 많아서 차량으로 이동 도와주실 수 있는 헬퍼님이면 좋겠습니다.
+
+아이들도 한 명 포함되어 있어서 친절하신 분이었으면 해요! 감사합니다.
+        </div>
+    </section>
+
+    <section style="text-align: center; padding: 40px 20px;">
+        <div style="font-size: 40px; margin-bottom: 10px;">🤝</div>
+        <span class="section-label" style="margin-bottom: 5px;">현재 지원한 헬퍼가 없습니다.</span>
+        <p style="font-size: 13px; color: #b2bec3; margin: 0;">매칭이 성사되면 여기에 헬퍼 정보가 표시됩니다.</p>
+    </section>
+
+    <div class="bottom-bar">
+        <a href="#" class="btn btn-cancel" onclick="confirmCancel()">요청 취소</a>
+        <a href="traveler_req_edit.html" class="btn btn-edit">📝 내용 수정하기</a>
+    </div>
+
+    <script>
+        function confirmCancel() {
+            if(confirm('정말로 이 요청을 취소하시겠습니까?')) {
+                alert('요청이 정상적으로 취소되었습니다.');
+                location.href = 'traveler.html';
+            }
+        }
+    </script>
+
+</body>
+</html>

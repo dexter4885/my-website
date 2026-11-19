@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>여행자 홈 - My Local Mate</title>
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --primary-dark: #ee5253;
+            --bg-color: #F8F9FA;
+            --text-color: #2D3436;
+            --card-bg: #ffffff;
+            --vip-gold: #D4AF37;
+            --vip-dark: #1C1C1C;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .logo { font-size: 18px; font-weight: 800; color: var(--primary-color); margin: 0; }
+        .profile-btn { font-size: 20px; text-decoration: none; }
+
+        .greeting-section { padding: 30px 20px 20px; }
+        .greeting-section h2 { margin: 0; font-size: 24px; font-weight: 400; line-height: 1.4; }
+        .greeting-section h2 strong { font-weight: 800; }
+        .greeting-section p { margin: 8px 0 0; color: #636e72; font-size: 14px; }
+
+        /* 2열 그리드 메뉴 */
+        .menu-grid {
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        /* 가로 꽉 차는 메뉴 섹션 */
+        .single-menu-section {
+            padding: 0 20px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .menu-card {
+            background-color: var(--card-bg);
+            padding: 20px 15px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.1s;
+        }
+
+        /* 가로형 카드 전용 스타일 */
+        .menu-card.horizontal {
+            flex-direction: row;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .menu-card.horizontal .icon { margin-bottom: 0; margin-right: 15px; }
+        .menu-card.horizontal .text-group { display: flex; flex-direction: column; }
+
+        .menu-card:active { transform: scale(0.97); background-color: #fcfcfc; }
+        .menu-card .icon { font-size: 28px; margin-bottom: 10px; }
+        .menu-card .title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .menu-card .desc { font-size: 12px; color: #b2bec3; }
+
+        .full-width-section { padding: 0 20px 20px; display: flex; flex-direction: column; gap: 12px; }
+
+        /* VIP 버튼 */
+        .btn-vip {
+            background-color: var(--vip-dark);
+            color: var(--vip-gold);
+            padding: 22px;
+            border-radius: 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+            border: 1px solid var(--vip-gold);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+        .btn-vip .icon { margin-right: 10px; font-size: 22px; }
+
+        .btn-start {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 18px; font-weight: 800;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-helper-mode {
+            background-color: #2D3436;
+            color: white;
+            padding: 18px;
+            border-radius: 16px;
+            text-decoration: none;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .helper-title { font-size: 15px; font-weight: 700; }
+        .helper-desc { font-size: 12px; color: #b2bec3; margin-top: 3px; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="logo">My Local Mate</h1>
+        <a href="index.html" class="profile-btn" title="로그아웃">🚪</a>
+    </header>
+
+    <div class="greeting-section">
+        <h2><strong>지민</strong> 여행자님,<br>반갑습니다! ✈️</h2>
+        <p>현지인과 함께할 다음 여행을 준비해 볼까요?</p>
+    </div>
+
+    <div class="menu-grid">
+        <a href="traveler_req_new.html" class="menu-card">
+            <span class="icon">📝</span>
+            <span class="title">새 일정 등록</span>
+            <span class="desc">도움 요청하기</span>
+        </a>
+
+        <a href="helper_search_list.html" class="menu-card">
+            <span class="icon">🔍</span>
+            <span class="title">로컬 헬퍼 찾기</span>
+            <span class="desc">도우미 게시판</span>
+        </a>
+
+        <a href="my_request_detail.html" class="menu-card">
+            <span class="icon">📋</span>
+            <span class="title">내 요청 현황</span>
+            <span class="desc">매칭 상태 확인</span>
+        </a>
+
+        <a href="homestay_list.html" class="menu-card">
+            <span class="icon">🏠</span>
+            <span class="title">민박 게시판</span>
+            <span class="desc">로컬 숙소 예약</span>
+        </a>
+    </div>
+
+    <div class="single-menu-section">
+        <a href="#" class="menu-card horizontal">
+            <span class="icon">💳</span>
+            <div class="text-group">
+                <span class="title">결제 내역</span>
+                <span class="desc">안전한 결제 및 이용 내역 관리</span>
+            </div>
+        </a>
+    </div>
+
+    <div class="full-width-section">
+        <a href="vip_request.html" class="btn-vip">
+            <span class="icon">👑</span> 프리미엄 VIP 여행신청
+        </a>
+
+        <a href="#" class="btn-start" onclick="alert('여행이 시작되었습니다!')">
+            <span class="icon">🎒</span> 본격적인 여행 시작!
+        </a>
+
+        <a href="helper_apply.html" class="btn-helper-mode">
+            <div class="helper-text-area">
+                <span class="helper-title">🔄 헬퍼(도우미) 모드 전환</span>
+                <span class="helper-desc">현지인이 되어 여행자를 도와주세요</span>
+            </div>
+            <span class="helper-icon">〉</span>
+        </a>
+    </div>
+
+</body>
+</html>

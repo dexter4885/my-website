@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>로컬 민박 찾기 - My Local Mate</title>
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --bg-color: #F8F9FA;
+            --text-color: #2D3436;
+            --white: #ffffff;
+            --tag-bg: #f1f3f5;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        header {
+            background-color: var(--white);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .back-btn { text-decoration: none; color: var(--text-color); font-size: 20px; margin-right: 15px; }
+        header h2 { margin: 0; font-size: 18px; font-weight: 700; flex: 1; text-align: center; margin-right: 35px; }
+
+        .container { padding: 20px; }
+
+        .stay-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.2s;
+        }
+
+        .stay-card:active { transform: scale(0.98); }
+
+        .stay-img {
+            width: 100%;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .stay-price-tag {
+            position: absolute;
+            bottom: 15px; right: 15px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .stay-info { padding: 15px 20px 20px; }
+        .stay-location { font-size: 11px; color: var(--primary-color); font-weight: 700; margin-bottom: 6px; }
+        .stay-title { font-size: 17px; font-weight: 800; margin-bottom: 12px; line-height: 1.4; }
+        
+        /* [수정] 평수, 인원 정보 */
+        .stay-details { 
+            display: flex; 
+            gap: 12px; 
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f8f9fa;
+        }
+        .detail-item { font-size: 12px; color: #636e72; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+
+        /* [추가] 편의시설 간이 태그 영역 */
+        .stay-amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .amenity-tag {
+            background: var(--tag-bg);
+            color: #495057;
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-btn">←</a>
+        <h2>로컬 민박 게시판</h2>
+    </header>
+
+    <div class="container">
+        <a href="homestay_detail.html" class="stay-card">
+            <div class="stay-img" style="background-image: url('https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80');">
+                <div class="stay-price-tag">₩85,000 / 박</div>
+            </div>
+            <div class="stay-info">
+                <div class="stay-location">📍 부산 수영구 (광안리 인근)</div>
+                <div class="stay-title">광안대교 뷰가 한눈에 들어오는 아늑한 로컬 다락방</div>
+                <div class="stay-details">
+                    <span class="detail-item">📐 42m²</span>
+                    <span class="detail-item">👥 최대 3인</span>
+                    <span class="detail-item">⭐ 4.9</span>
+                </div>
+                <div class="stay-amenities">
+                    <span class="amenity-tag">📶 Wi-Fi</span>
+                    <span class="amenity-tag">🅿️ 주차</span>
+                    <span class="amenity-tag">🍳 취사</span>
+                    <span class="amenity-tag">❄️ 에어컨</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="stay-card">
+            <div class="stay-img" style="background-image: url('https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80');">
+                <div class="stay-price-tag">₩120,000 / 박</div>
+            </div>
+            <div class="stay-info">
+                <div class="stay-location">📍 서울 마포구 (연남동)</div>
+                <div class="stay-title">연트럴파크 옆 화이트톤 감성 하우스</div>
+                <div class="stay-details">
+                    <span class="detail-item">📐 56m²</span>
+                    <span class="detail-item">👥 최대 4인</span>
+                    <span class="detail-item">⭐ 4.8</span>
+                </div>
+                <div class="stay-amenities">
+                    <span class="amenity-tag">📶 Wi-Fi</span>
+                    <span class="amenity-tag">🧺 세탁기</span>
+                    <span class="amenity-tag">📺 OTT</span>
+                    <span class="amenity-tag">🚫 금연</span>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</body>
+</html>

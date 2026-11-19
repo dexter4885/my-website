@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>헬퍼 신청 - My Local Mate</title>
+    <style>
+        /* 공통 색상 변수 */
+        :root {
+            --primary-color: #FF6B6B;
+            --primary-dark: #ee5253;
+            --bg-color: #F8F9FA;
+            --text-color: #2D3436;
+            --border-color: #dfe6e9;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* 상단 헤더 */
+        header {
+            background-color: #ffffff;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 20px;
+            margin-right: 15px;
+        }
+
+        header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 폼 영역 */
+        main {
+            flex: 1;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        .form-info {
+            margin-bottom: 25px;
+        }
+
+        .form-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 22px;
+            color: var(--primary-color);
+        }
+
+        .form-info p {
+            margin: 0;
+            font-size: 14px;
+            color: #636e72;
+        }
+
+        /* 개별 입력 그룹 */
+        .input-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+
+        /* 입력창, 셀렉트박스 공통 스타일 */
+        input[type="text"], select, textarea {
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+            background-color: #ffffff;
+            -webkit-appearance: none; /* 모바일 브라우저 기본 스타일 제거 */
+            appearance: none;
+        }
+
+        /* 셀렉트박스 화살표 커스텀 */
+        select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232d3436' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 15px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-color);
+        }
+
+        textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        /* 라디오 및 체크박스 버튼 그룹 (성별, 자격증, 언어) */
+        .radio-group, .checkbox-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .radio-item, .checkbox-item {
+            flex: 1;
+            position: relative;
+        }
+
+        .radio-item input, .checkbox-item input {
+            display: none; /* 기본 체크박스 숨김 */
+        }
+
+        .radio-item label, .checkbox-item label {
+            display: block;
+            margin: 0;
+            padding: 14px 10px;
+            text-align: center;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #636e72;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        /* 선택되었을 때의 스타일 */
+        .radio-item input:checked + label, 
+        .checkbox-item input:checked + label {
+            background-color: #ffeaea;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* 자격증 상세내용 (기본 숨김) */
+        #cert-detail-group {
+            display: none;
+            margin-top: 10px;
+        }
+
+        /* 하단 고정 등록 버튼 */
+        .submit-area {
+            padding: 20px;
+            background-color: #ffffff;
+            border-top: 1px solid #eee;
+            position: sticky;
+            bottom: 0;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+            transition: background-color 0.1s;
+        }
+
+        .submit-btn:active {
+            background-color: var(--primary-dark);
+        }
+        
+        .my-list-link {
+          display: flex;
+          justify-content: space-between; /* 양쪽 끝으로 요소를 밀어냄 */
+          align-items: center; /* 수직 중앙 정렬 */
+          padding: 10px;
+        }
+        .my-list-link a {
+          text-decoration: none;
+          color: #007bff;
+          font-weight: bold;
+          padding: 10px 10px;
+          border-radius: 10px;
+          background-color: #eee; /* 배경색 예시 */
+        }
+
+        .my-list-link a:hover {
+          background-color: #e2e2e2; /* 배경색 예시 */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="traveler.html" class="back-btn">←</a>
+        <h2>헬퍼 신청하기</h2>
+    </header>
+
+    <main>
+        <div class="form-info">
+            <div class="my-list-link">
+                <h3>나의 로컬 정보 등록</h3>
+                <a href="helper_contents.html" class="my-list-link">나의 등록 목록</a>
+            </div>
+            <p>여행자들에게 제공할 도움 정보를 입력해주세요.</p>
+        </div>
+        
+
+        <form onsubmit="event.preventDefault(); alert('헬퍼 등록 신청이 완료되었습니다! 관리자 승인을 기다려주세요.');">
+            
+            <div class="input-group">
+                <label>국가</label>
+                <select>
+                    <option value="" disabled selected>활동하실 국가를 선택하세요</option>
+                    <option value="KR">한국 (Korea)</option>
+                    <option value="CN">중국 (China)</option>
+                    <option value="JP">일본 (Japan)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>도시</label>
+                <input type="text" placeholder="예: 서울, 도쿄, 베이징 등">
+            </div>
+
+            <div class="input-group">
+                <label>성별</label>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="gender-m" name="gender" value="M">
+                        <label for="gender-m">남성</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="gender-f" name="gender" value="F">
+                        <label for="gender-f">여성</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>사용 가능한 언어 (중복선택 가능)</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item" style="flex: 1 1 40%;">
+                        <input type="checkbox" id="lang-ko" name="lang" value="Korean">
+                        <label for="lang-ko">한국어</label>
+                    </div>
+                    <div class="checkbox-item" style="flex: 1 1 40%;">
+                        <input type="checkbox" id="lang-en" name="lang" value="English">
+                        <label for="lang-en">영어</label>
+                    </div>
+                    <div class="checkbox-item" style="flex: 1 1 40%;">
+                        <input type="checkbox" id="lang-jp" name="lang" value="Japanese">
+                        <label for="lang-jp">일본어</label>
+                    </div>
+                    <div class="checkbox-item" style="flex: 1 1 40%;">
+                        <input type="checkbox" id="lang-cn" name="lang" value="Chinese">
+                        <label for="lang-cn">중국어</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>동행 종류</label>
+                <select>
+                    <option value="" disabled selected>제공할 도움 유형을 선택하세요</option>
+                    <option value="simple">단순 동행 (맛집, 쇼핑 등)</option>
+                    <option value="expert">전문 가이드 (역사, 문화 해설 등)</option>
+                    <option value="translate">스마트폰 통역 동행</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>관련 자격증 여부</label>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="cert-y" name="cert" value="Y" onclick="toggleCertInput(true)">
+                        <label for="cert-y">있음</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="cert-n" name="cert" value="N" onclick="toggleCertInput(false)">
+                        <label for="cert-n">없음</label>
+                    </div>
+                </div>
+
+                <div id="cert-detail-group">
+                    <input type="text" id="cert-detail" placeholder="보유하신 자격증 명칭을 적어주세요">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>차량 지원 옵션</label>
+                <select>
+                    <option value="none">없음 (대중교통/도보 이용)</option>
+                    <option value="car-4">1~4인승 승용차</option>
+                    <option value="car-5">5인승 이상 승합차</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>특기사항 및 자기소개</label>
+                <textarea placeholder="여행자들에게 어필할 만한 나만의 장점이나 주의사항을 자유롭게 작성해주세요."></textarea>
+            </div>
+
+    </main>
+
+    <div class="submit-area">
+        <button type="submit" class="submit-btn" onclick="document.querySelector('form').requestSubmit();">헬퍼 등록 신청하기</button>
+    </div>
+    
+    </form>
+
+    <script>
+        function toggleCertInput(hasCert) {
+            const detailGroup = document.getElementById('cert-detail-group');
+            const detailInput = document.getElementById('cert-detail');
+            
+            if (hasCert) {
+                detailGroup.style.display = 'block';
+                detailInput.setAttribute('required', 'true'); // 필수 입력으로 변경
+            } else {
+                detailGroup.style.display = 'none';
+                detailInput.removeAttribute('required'); // 필수 입력 해제
+                detailInput.value = ''; // 값 초기화
+            }
+        }
+    </script>
+</body>
+</html>
